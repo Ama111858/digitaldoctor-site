@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PromptBoxLab – Digital Doctor | AI Prompts, Music, Apps & More</title>
+  <meta name="description" content="PromptBoxLab by Digital Doctor – Premium 100 AI Prompt Pack, 50 Licensed Music Pack, Windows EXE App, Android Prompt Manager App, Auto-Save GUI & Ebook. Get the best digital tools at unbeatable prices." />
+  <meta name="keywords" content="AI prompts, prompt pack, music pack, android app, digital products, PromptBoxLab, Digital Doctor" />
+  <meta property="og:title" content="PromptBoxLab – Digital Doctor" />
+  <meta property="og:description" content="Premium AI Prompt Packs, Licensed Music, Apps & More. Limited Offer!" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧠</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #020408;
+      --bg2: #040b14;
+      --card: #0a1628;
+      --card2: #071020;
+      --accent: #00d4ff;
+      --accent2: #7b2fff;
+      --accent3: #ff2d78;
+      --gold: #ffd700;
+      --green: #00ff88;
+      --text: #e8f4ff;
+      --muted: #6a8aaa;
+      --border: rgba(0,212,255,0.15);
+      --glow: 0 0 30px rgba(0,212,255,0.3);
+      --font-head: 'Orbitron', sans-serif;
+      --font-body: 'Rajdhani', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 18px;
+      overflow-x: hidden;
+    }
+
+    /* ── NOISE TEXTURE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.4;
+    }
+
+    section, nav, footer { position: relative; z-index: 1; }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 2px; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 999;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 40px;
+      background: rgba(2,4,8,0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 12px;
+    }
+    .nav-logo .icon {
+      width: 40px; height: 40px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px;
+      box-shadow: var(--glow);
+    }
+    .nav-logo .brand { font-family: var(--font-head); font-size: 14px; letter-spacing: 2px; color: var(--accent); }
+    .nav-logo .sub { font-family: var(--font-body); font-size: 11px; color: var(--muted); letter-spacing: 1px; }
+    .nav-links { display: flex; gap: 28px; }
+    .nav-links a {
+      color: var(--muted); font-size: 14px; text-decoration: none;
+      font-family: var(--font-mono); letter-spacing: 1px;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-cta {
+      background: linear-gradient(135deg, var(--accent2), var(--accent));
+      color: #000; font-family: var(--font-head); font-size: 12px;
+      letter-spacing: 2px; padding: 10px 24px; border-radius: 6px;
+      text-decoration: none; font-weight: 700;
+      box-shadow: 0 0 20px rgba(123,47,255,0.5);
+      transition: all 0.3s;
+    }
+    .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 0 35px rgba(0,212,255,0.6); }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .hamburger span { width: 24px; height: 2px; background: var(--accent); border-radius: 2px; transition: all 0.3s; }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center;
+      padding: 120px 20px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 30%, rgba(123,47,255,0.15) 0%, transparent 70%),
+                  radial-gradient(ellipse 60% 40% at 80% 80%, rgba(0,212,255,0.08) 0%, transparent 60%),
+                  radial-gradient(ellipse 40% 30% at 20% 60%, rgba(255,45,120,0.06) 0%, transparent 50%);
+    }
+    .hero-grid {
+      position: absolute; inset: 0;
+      background-image: linear-gradient(rgba(0,212,255,0.04) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(0,212,255,0.04) 1px, transparent 1px);
+      background-size: 50px 50px;
+      mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+    }
+    .badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(0,212,255,0.08);
+      border: 1px solid rgba(0,212,255,0.2);
+      border-radius: 100px;
+      padding: 8px 20px; margin-bottom: 28px;
+      font-family: var(--font-mono); font-size: 12px; color: var(--accent);
+      letter-spacing: 2px;
+      animation: fadeDown 0.8s ease both;
+    }
+    .badge::before { content: '●'; animation: pulse 1.5s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+    h1 {
+      font-family: var(--font-head);
+      font-size: clamp(36px, 6vw, 80px);
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -1px;
+      margin-bottom: 24px;
+      animation: fadeUp 0.9s ease 0.2s both;
+    }
+    h1 .line1 { display: block; color: var(--text); }
+    h1 .line2 {
+      display: block;
+      background: linear-gradient(135deg, var(--accent), var(--accent2), var(--accent3));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .hero-sub {
+      max-width: 640px; margin: 0 auto 40px;
+      font-size: 20px; color: var(--muted); line-height: 1.6;
+      font-weight: 400;
+      animation: fadeUp 0.9s ease 0.4s both;
+    }
+    .hero-btns {
+      display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;
+      animation: fadeUp 0.9s ease 0.6s both;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent2), var(--accent));
+      color: #fff; font-family: var(--font-head); font-size: 13px;
+      letter-spacing: 2px; padding: 16px 40px; border-radius: 8px;
+      text-decoration: none; font-weight: 700; border: none; cursor: pointer;
+      box-shadow: 0 0 40px rgba(123,47,255,0.4);
+      transition: all 0.3s; display: inline-block;
+    }
+    .btn-primary:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 0 60px rgba(0,212,255,0.5); }
+    .btn-ghost {
+      background: transparent;
+      color: var(--accent); font-family: var(--font-head); font-size: 13px;
+      letter-spacing: 2px; padding: 16px 40px; border-radius: 8px;
+      text-decoration: none; font-weight: 700;
+      border: 1px solid rgba(0,212,255,0.4);
+      transition: all 0.3s; display: inline-block; cursor: pointer;
+    }
+    .btn-ghost:hover { background: rgba(0,212,255,0.08); transform: translateY(-3px); }
+
+    .hero-stats {
+      display: flex; gap: 48px; margin-top: 64px; flex-wrap: wrap; justify-content: center;
+      animation: fadeUp 0.9s ease 0.8s both;
+    }
+    .stat { text-align: center; }
+    .stat-num { font-family: var(--font-head); font-size: 32px; color: var(--accent); font-weight: 900; }
+    .stat-label { font-size: 13px; color: var(--muted); letter-spacing: 1px; margin-top: 4px; }
+
+    /* ── SECTION BASE ── */
+    section { padding: 100px 20px; }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .section-tag {
+      font-family: var(--font-mono); font-size: 12px; color: var(--accent);
+      letter-spacing: 4px; text-transform: uppercase; margin-bottom: 16px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .section-tag::before { content:''; flex: 0 0 30px; height: 1px; background: var(--accent); }
+    .section-title {
+      font-family: var(--font-head); font-size: clamp(28px, 4vw, 48px);
+      font-weight: 900; line-height: 1.2; margin-bottom: 20px;
+    }
+    .gradient-text {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .section-sub { color: var(--muted); font-size: 18px; max-width: 580px; line-height: 1.7; }
+
+    /* ── PROBLEM / SOLUTION ── */
+    #problem { background: var(--bg2); }
+    .problem-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 60px; }
+    .prob-card {
+      background: rgba(255,45,120,0.05);
+      border: 1px solid rgba(255,45,120,0.15);
+      border-radius: 16px; padding: 32px;
+    }
+    .sol-card {
+      background: rgba(0,212,255,0.05);
+      border: 1px solid rgba(0,212,255,0.15);
+      border-radius: 16px; padding: 32px;
+    }
+    .card-icon { font-size: 36px; margin-bottom: 16px; }
+    .card-title { font-family: var(--font-head); font-size: 18px; margin-bottom: 12px; }
+    .card-list { list-style: none; }
+    .card-list li {
+      padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
+      color: var(--muted); font-size: 16px; display: flex; gap: 10px;
+    }
+    .card-list li:last-child { border: none; }
+    .prob-card .card-list li::before { content: '✗'; color: var(--accent3); flex-shrink: 0; }
+    .sol-card .card-list li::before { content: '✓'; color: var(--green); flex-shrink: 0; }
+
+    /* ── PRODUCTS ── */
+    #products { background: var(--bg); }
+    .products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; margin-top: 60px; }
+    .product-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px; padding: 36px 30px;
+      position: relative; overflow: hidden;
+      transition: all 0.4s; cursor: default;
+    }
+    .product-card::before {
+      content: '';
+      position: absolute; top: -50%; left: -50%;
+      width: 200%; height: 200%;
+      background: radial-gradient(circle, rgba(0,212,255,0.04) 0%, transparent 60%);
+      opacity: 0; transition: opacity 0.4s;
+    }
+    .product-card:hover { transform: translateY(-6px); border-color: rgba(0,212,255,0.4); box-shadow: 0 20px 60px rgba(0,0,0,0.4), var(--glow); }
+    .product-card:hover::before { opacity: 1; }
+    .product-card.featured {
+      border-color: var(--accent2);
+      background: linear-gradient(135deg, rgba(123,47,255,0.12), rgba(0,212,255,0.06));
+    }
+    .product-card.coming-soon { opacity: 0.7; }
+    .prod-ribbon {
+      position: absolute; top: 20px; right: 20px;
+      font-family: var(--font-mono); font-size: 10px; letter-spacing: 2px;
+      padding: 5px 12px; border-radius: 100px;
+    }
+    .ribbon-new { background: rgba(0,212,255,0.15); color: var(--accent); border: 1px solid rgba(0,212,255,0.3); }
+    .ribbon-hot { background: rgba(255,45,120,0.15); color: var(--accent3); border: 1px solid rgba(255,45,120,0.3); }
+    .ribbon-soon { background: rgba(255,215,0,0.1); color: var(--gold); border: 1px solid rgba(255,215,0,0.3); }
+    .ribbon-both { background: rgba(0,255,136,0.1); color: var(--green); border: 1px solid rgba(0,255,136,0.3); }
+    .prod-emoji { font-size: 44px; margin-bottom: 20px; }
+    .prod-name { font-family: var(--font-head); font-size: 18px; color: var(--text); margin-bottom: 8px; letter-spacing: 1px; }
+    .prod-tagline { color: var(--muted); font-size: 15px; line-height: 1.5; margin-bottom: 20px; }
+    .prod-features { list-style: none; margin-bottom: 24px; }
+    .prod-features li { font-size: 14px; color: var(--muted); padding: 5px 0; display: flex; gap: 8px; }
+    .prod-features li::before { content: '→'; color: var(--accent); }
+    .prod-price {
+      display: flex; align-items: baseline; gap: 10px; margin-bottom: 20px;
+    }
+    .price-amount { font-family: var(--font-head); font-size: 28px; color: var(--green); }
+    .price-old { font-size: 16px; color: var(--muted); text-decoration: line-through; }
+    .price-save { font-size: 12px; color: var(--accent3); font-family: var(--font-mono); background: rgba(255,45,120,0.1); padding: 3px 8px; border-radius: 4px; }
+    .prod-cta {
+      display: block; text-align: center;
+      padding: 13px 24px; border-radius: 8px; font-family: var(--font-head);
+      font-size: 12px; letter-spacing: 2px; text-decoration: none;
+      transition: all 0.3s; border: none; cursor: pointer; width: 100%;
+    }
+    .cta-buy {
+      background: linear-gradient(135deg, var(--accent2), var(--accent));
+      color: #fff;
+      box-shadow: 0 0 20px rgba(123,47,255,0.3);
+    }
+    .cta-buy:hover { box-shadow: 0 0 40px rgba(0,212,255,0.5); transform: translateY(-2px); }
+    .cta-soon {
+      background: rgba(255,215,0,0.08);
+      color: var(--gold);
+      border: 1px solid rgba(255,215,0,0.3);
+      cursor: not-allowed;
+    }
+
+    /* ── BENEFITS ── */
+    #benefits { background: var(--bg2); }
+    .benefits-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; margin-top: 60px; }
+    .benefit-card {
+      background: var(--card2); border: 1px solid var(--border);
+      border-radius: 16px; padding: 28px 24px; text-align: center;
+      transition: all 0.3s;
+    }
+    .benefit-card:hover { transform: translateY(-4px); border-color: rgba(0,212,255,0.3); }
+    .benefit-icon { font-size: 40px; margin-bottom: 14px; }
+    .benefit-title { font-family: var(--font-head); font-size: 15px; color: var(--text); margin-bottom: 8px; letter-spacing: 1px; }
+    .benefit-text { color: var(--muted); font-size: 14px; line-height: 1.5; }
+
+    /* ── TESTIMONIALS ── */
+    #testimonials { background: var(--bg); }
+    .testi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-top: 60px; }
+    .testi-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 16px; padding: 28px;
+      transition: all 0.3s;
+    }
+    .testi-card:hover { border-color: rgba(123,47,255,0.4); transform: translateY(-4px); }
+    .testi-stars { color: var(--gold); font-size: 18px; margin-bottom: 14px; letter-spacing: 2px; }
+    .testi-text { color: var(--muted); font-size: 16px; line-height: 1.7; margin-bottom: 20px; font-style: italic; }
+    .testi-author { display: flex; align-items: center; gap: 12px; }
+    .testi-avatar {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent2), var(--accent));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; font-weight: 700; color: #fff; font-family: var(--font-head);
+      flex-shrink: 0;
+    }
+    .testi-name { font-family: var(--font-head); font-size: 14px; color: var(--text); }
+    .testi-role { font-size: 12px; color: var(--muted); }
+
+    /* ── URGENCY ── */
+    #urgency {
+      background: linear-gradient(135deg, rgba(123,47,255,0.15), rgba(0,212,255,0.08));
+      border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    }
+    .urgency-inner { text-align: center; max-width: 700px; margin: 0 auto; }
+    .urgency-badge {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: rgba(255,45,120,0.1); border: 1px solid rgba(255,45,120,0.3);
+      color: var(--accent3); font-family: var(--font-mono); font-size: 13px;
+      letter-spacing: 2px; padding: 10px 24px; border-radius: 100px; margin-bottom: 32px;
+    }
+    .urgency-badge::before { content: '🔥'; }
+    .countdown {
+      display: flex; gap: 24px; justify-content: center; margin-top: 40px; flex-wrap: wrap;
+    }
+    .count-block {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 12px; padding: 20px 28px; text-align: center; min-width: 90px;
+    }
+    .count-num { font-family: var(--font-head); font-size: 40px; color: var(--accent); font-weight: 900; }
+    .count-label { font-size: 11px; color: var(--muted); letter-spacing: 2px; margin-top: 4px; }
+
+    /* ── CONTACT FORM ── */
+    #contact { background: var(--bg2); }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; margin-top: 60px; align-items: start; }
+    .contact-info h3 { font-family: var(--font-head); font-size: 22px; margin-bottom: 20px; }
+    .contact-detail {
+      display: flex; align-items: center; gap: 14px;
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 12px; padding: 16px 20px; margin-bottom: 14px;
+    }
+    .contact-detail .icon { font-size: 22px; }
+    .contact-detail .label { font-size: 12px; color: var(--muted); letter-spacing: 1px; }
+    .contact-detail .value { font-family: var(--font-mono); font-size: 15px; color: var(--accent); }
+    .form-box {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 20px; padding: 36px;
+    }
+    .form-title { font-family: var(--font-head); font-size: 20px; margin-bottom: 24px; }
+    .form-group { margin-bottom: 18px; }
+    .form-group label { display: block; font-size: 12px; color: var(--muted); letter-spacing: 2px; margin-bottom: 8px; font-family: var(--font-mono); }
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%; padding: 14px 18px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 10px; color: var(--text);
+      font-family: var(--font-body); font-size: 16px;
+      outline: none; transition: border 0.3s;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus { border-color: var(--accent); background: rgba(0,212,255,0.04); }
+    .form-group textarea { min-height: 110px; resize: vertical; }
+    .form-group select option { background: #0a1628; }
+    .form-error { color: var(--accent3); font-size: 12px; margin-top: 5px; display: none; }
+    .btn-submit {
+      width: 100%; padding: 16px; border-radius: 10px;
+      background: linear-gradient(135deg, var(--accent2), var(--accent));
+      color: #fff; font-family: var(--font-head); font-size: 14px;
+      letter-spacing: 2px; border: none; cursor: pointer;
+      box-shadow: 0 0 30px rgba(123,47,255,0.4); transition: all 0.3s;
+    }
+    .btn-submit:hover { box-shadow: 0 0 50px rgba(0,212,255,0.5); transform: translateY(-2px); }
+    .form-success {
+      display: none; text-align: center; padding: 24px;
+      background: rgba(0,255,136,0.08); border: 1px solid rgba(0,255,136,0.2);
+      border-radius: 12px; margin-top: 20px;
+    }
+    .form-success .checkmark { font-size: 48px; margin-bottom: 12px; }
+    .form-success h4 { font-family: var(--font-head); color: var(--green); font-size: 18px; }
+
+    /* ── FAQ ── */
+    #faq { background: var(--bg); }
+    .faq-grid { max-width: 760px; margin: 60px auto 0; }
+    .faq-item {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 14px; margin-bottom: 14px; overflow: hidden;
+      transition: border-color 0.3s;
+    }
+    .faq-item.open { border-color: rgba(0,212,255,0.4); }
+    .faq-q {
+      padding: 22px 28px; display: flex; justify-content: space-between; align-items: center;
+      cursor: pointer; font-family: var(--font-head); font-size: 15px; letter-spacing: 0.5px;
+      transition: color 0.3s;
+    }
+    .faq-item.open .faq-q { color: var(--accent); }
+    .faq-arrow { font-size: 20px; transition: transform 0.3s; color: var(--muted); }
+    .faq-item.open .faq-arrow { transform: rotate(45deg); color: var(--accent); }
+    .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
+    .faq-a-inner { padding: 0 28px 22px; color: var(--muted); font-size: 16px; line-height: 1.7; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      padding: 60px 20px 30px;
+      text-align: center;
+    }
+    .footer-logo { font-family: var(--font-head); font-size: 22px; color: var(--accent); margin-bottom: 8px; letter-spacing: 3px; }
+    .footer-sub { font-size: 13px; color: var(--muted); margin-bottom: 30px; }
+    .footer-links { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; margin-bottom: 30px; }
+    .footer-links a { color: var(--muted); text-decoration: none; font-size: 14px; font-family: var(--font-mono); transition: color 0.3s; }
+    .footer-links a:hover { color: var(--accent); }
+    .footer-copy { color: var(--muted); font-size: 12px; }
+    .footer-copy span { color: var(--accent3); }
+    .footer-reg { font-size: 11px; color: rgba(106,138,170,0.5); margin-top: 6px; }
+
+    /* ── FLOATING WHATSAPP ── */
+    .wa-float {
+      position: fixed; bottom: 28px; right: 28px; z-index: 9999;
+      width: 62px; height: 62px; border-radius: 50%;
+      background: #25D366;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 30px rgba(37,211,102,0.5);
+      text-decoration: none; transition: all 0.3s;
+      animation: waPop 0.5s ease 1s both;
+    }
+    .wa-float:hover { transform: scale(1.12) rotate(-5deg); box-shadow: 0 6px 40px rgba(37,211,102,0.7); }
+    .wa-float svg { width: 32px; height: 32px; fill: #fff; }
+    .wa-tooltip {
+      position: absolute; right: 76px; top: 50%; transform: translateY(-50%);
+      background: #25D366; color: #fff; font-family: var(--font-mono);
+      font-size: 12px; white-space: nowrap; padding: 8px 14px; border-radius: 8px;
+      opacity: 0; pointer-events: none; transition: opacity 0.3s;
+    }
+    .wa-float:hover .wa-tooltip { opacity: 1; }
+    @keyframes waPop { from{transform:scale(0);opacity:0} 80%{transform:scale(1.1)} to{transform:scale(1);opacity:1} }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+    @keyframes fadeDown { from{opacity:0;transform:translateY(-20px)} to{opacity:1;transform:translateY(0)} }
+
+    .reveal {
+      opacity: 0; transform: translateY(40px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── MOBILE ── */
+    @media (max-width: 768px) {
+      nav { padding: 16px 20px; }
+      .nav-links { display: none; flex-direction: column; position: absolute; top: 70px; left: 0; right: 0; background: rgba(2,4,8,0.97); padding: 20px; border-bottom: 1px solid var(--border); gap: 16px; }
+      .nav-links.open { display: flex; }
+      .nav-cta { display: none; }
+      .hamburger { display: flex; }
+      .problem-grid { grid-template-columns: 1fr; }
+      .contact-grid { grid-template-columns: 1fr; gap: 30px; }
+      .hero-stats { gap: 28px; }
+      .stat-num { font-size: 24px; }
+      section { padding: 70px 20px; }
+    }
+    @media (max-width: 480px) {
+      .hero-btns { flex-direction: column; align-items: center; }
+      .btn-primary, .btn-ghost { width: 100%; max-width: 300px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">
+      <div class="icon">🧠</div>
+      <div>
+        <div class="brand">DIGITAL DOCTOR</div>
+        <div class="sub">PromptBoxLab®</div>
+      </div>
+    </div>
+    <div class="nav-links" id="navLinks">
+      <a href="#products">Products</a>
+      <a href="#benefits">Why Us</a>
+      <a href="#testimonials">Reviews</a>
+      <a href="#faq">FAQ</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <a href="https://wa.me/919873060755" target="_blank" class="nav-cta">GET NOW →</a>
+    <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="badge">LAUNCHING NOW · LIMITED COPIES AVAILABLE</div>
+    <h1>
+      <span class="line1">AI Tools That Actually</span>
+      <span class="line2">Make You Money</span>
+    </h1>
+    <p class="hero-sub">Premium Prompt Packs, Licensed Music, Powerful Apps & More — Built by Digital Doctor. Designed for Creators, Freelancers & Hustlers.</p>
+    <div class="hero-btns">
+      <a href="#products" class="btn-primary">EXPLORE ALL PRODUCTS</a>
+      <a href="https://wa.me/919873060755?text=Hi%2C%20I%27m%20interested%20in%20PromptBoxLab%20products!" target="_blank" class="btn-ghost">CHAT ON WHATSAPP</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num">500+</div><div class="stat-label">Happy Customers</div></div>
+      <div class="stat"><div class="stat-num">100+</div><div class="stat-label">AI Prompts</div></div>
+      <div class="stat"><div class="stat-num">50+</div><div class="stat-label">Licensed Tracks</div></div>
+      <div class="stat"><div class="stat-num">4.9★</div><div class="stat-label">Avg Rating</div></div>
+    </div>
+  </section>
+
+  <!-- PROBLEM / SOLUTION -->
+  <section id="problem">
+    <div class="container reveal">
+      <div class="section-tag">THE REALITY CHECK</div>
+      <h2 class="section-title">Kya Ye Tumhari <span class="gradient-text">Problems Hain?</span></h2>
+      <div class="problem-grid">
+        <div class="prob-card">
+          <div class="card-icon">😫</div>
+          <div class="card-title" style="color:var(--accent3)">Without PromptBoxLab</div>
+          <ul class="card-list">
+            <li>Ghante bhar AI prompts likhte ho, result zero</li>
+            <li>Copyright music nahi milta, video ruk jaata hai</li>
+            <li>Prompts save nahi hote, baar baar type karo</li>
+            <li>Tools alag alag, koi ek jagah nahi sab kuch</li>
+            <li>Freelance projects late hote hain daily</li>
+          </ul>
+        </div>
+        <div class="sol-card">
+          <div class="card-icon">🚀</div>
+          <div class="card-title" style="color:var(--green)">With PromptBoxLab</div>
+          <ul class="card-list">
+            <li>Ready-made 100 pro prompts — zero thinking required</li>
+            <li>50 licensed music tracks — use anywhere, no copyright issues</li>
+            <li>One-click save prompts from clipboard (auto!)</li>
+            <li>Windows + Android app — everything in your pocket</li>
+            <li>Ebook se new skills seekho, income badao</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUCTS -->
+  <section id="products">
+    <div class="container">
+      <div class="section-tag reveal">OUR DIGITAL ARSENAL</div>
+      <h2 class="section-title reveal">Sab Kuch Ek Jagah, <span class="gradient-text">Ek Daam Mein</span></h2>
+      <p class="section-sub reveal">Professional-grade digital products jo tumhare workflow ko supercharge kar denge.</p>
+      <div class="products-grid">
+
+        <!-- PRODUCT 1 -->
+        <div class="product-card featured reveal">
+          <span class="prod-ribbon ribbon-hot">🔥 BESTSELLER</span>
+          <div class="prod-emoji">🧠</div>
+          <div class="prod-name">100 AI PROMPT PACK</div>
+          <div class="prod-tagline">ChatGPT, Midjourney & more ke liye 100 hand-crafted, tested prompts. Result-oriented, bilkul ready.</div>
+          <ul class="prod-features">
+            <li>10 Categories – Marketing, Design, Code & more</li>
+            <li>ChatGPT + Midjourney + Claude compatible</li>
+            <li>PDF + TXT format mein milega</li>
+            <li>Lifetime access, free updates</li>
+          </ul>
+          <div class="prod-price">
+            <span class="price-amount">₹299</span>
+            <span class="price-old">₹999</span>
+            <span class="price-save">70% OFF</span>
+          </div>
+          <a href="https://wa.me/919873060755?text=Hi%2C%20I%20want%20to%20buy%20100%20AI%20Prompt%20Pack%20%E2%82%B9299" target="_blank" class="prod-cta cta-buy">BUY NOW → WHATSAPP</a>
+        </div>
+
+        <!-- PRODUCT 2 -->
+        <div class="product-card reveal">
+          <span class="prod-ribbon ribbon-new">✨ NEW</span>
+          <div class="prod-emoji">🎵</div>
+          <div class="prod-name">50 MUSIC PACK + LICENCE</div>
+          <div class="prod-tagline">Copyright-free, royalty-free 50 music tracks with full commercial licence. YouTube se Instagram tak.</div>
+          <ul class="prod-features">
+            <li>50 unique tracks across 10 genres</li>
+            <li>Full commercial licence included</li>
+            <li>MP3 + WAV format available</li>
+            <li>YouTube, Reels, Shorts sab ke liye safe</li>
+          </ul>
+          <div class="prod-price">
+            <span class="price-amount">₹499</span>
+            <span class="price-old">₹1499</span>
+            <span class="price-save">67% OFF</span>
+          </div>
+          <a href="https://wa.me/919873060755?text=Hi%2C%20I%20want%20to%20buy%2050%20Music%20Pack%20%E2%82%B9499" target="_blank" class="prod-cta cta-buy">BUY NOW → WHATSAPP</a>
+        </div>
+
+        <!-- PRODUCT 3 -->
+        <div class="product-card reveal">
+          <span class="prod-ribbon ribbon-new">💻 WINDOWS</span>
+          <div class="prod-emoji">🖥️</div>
+          <div class="prod-name">PROMPT MANAGER EXE</div>
+          <div class="prod-tagline">Windows application jisme apne prompts organize karo, clipboard se auto-save karo, one-click copy karo.</div>
+          <ul class="prod-features">
+            <li>Auto clipboard capture & save</li>
+            <li>Category-wise prompt organization</li>
+            <li>One-click copy from GUI</li>
+            <li>Offline, fast, lightweight (.exe)</li>
+          </ul>
+          <div class="prod-price">
+            <span class="price-amount">₹349</span>
+            <span class="price-old">₹999</span>
+            <span class="price-save">65% OFF</span>
+          </div>
+          <a href="https://wa.me/919873060755?text=Hi%2C%20I%20want%20to%20buy%20Prompt%20Manager%20EXE%20%E2%82%B9349" target="_blank" class="prod-cta cta-buy">BUY NOW → WHATSAPP</a>
+        </div>
+
+        <!-- PRODUCT 4 -->
+        <div class="product-card reveal">
+          <span class="prod-ribbon ribbon-hot">📱 ANDROID</span>
+          <div class="prod-emoji">📲</div>
+          <div class="prod-name">ANDROID PROMPT APP</div>
+          <div class="prod-tagline">Mobile pe prompts manage karo. Copy kiya → auto save! One-tap share karo kisi bhi AI app mein.</div>
+          <ul class="prod-features">
+            <li>One-click save from Android clipboard</li>
+            <li>Prompt categories & tags</li>
+            <li>Offline access, no login needed</li>
+            <li>Dark mode + minimal UI</li>
+          </ul>
+          <div class="prod-price">
+            <span class="price-amount">₹299</span>
+            <span class="price-old">₹799</span>
+            <span class="price-save">63% OFF</span>
+          </div>
+          <a href="https://wa.me/919873060755?text=Hi%2C%20I%20want%20to%20buy%20Android%20Prompt%20App%20%E2%82%B9299" target="_blank" class="prod-cta cta-buy">BUY NOW → WHATSAPP</a>
+        </div>
+
+        <!-- PRODUCT 5 – BUNDLE -->
+        <div class="product-card featured reveal">
+          <span class="prod-ribbon ribbon-both">🔥 BOTH APPS</span>
+          <div class="prod-emoji">⚡</div>
+          <div class="prod-name">WINDOWS + ANDROID BUNDLE</div>
+          <div class="prod-tagline">Dono apps ek saath lo — Windows EXE + Android APK. Desktop pe kaam karo, mobile pe sync karo.</div>
+          <ul class="prod-features">
+            <li>Prompt Manager EXE (Windows)</li>
+            <li>Prompt Manager APK (Android)</li>
+            <li>Auto clipboard GUI both platforms</li>
+            <li>Best value bundle — maximum saving</li>
+          </ul>
+          <div class="prod-price">
+            <span class="price-amount">₹549</span>
+            <span class="price-old">₹1798</span>
+            <span class="price-save">69% OFF</span>
+          </div>
+          <a href="https://wa.me/919873060755?text=Hi%2C%20I%20want%20to%20buy%20Windows+Android%20Bundle%20%E2%82%B9549" target="_blank" class="prod-cta cta-buy">GET BUNDLE → WHATSAPP</a>
+        </div>
+
+        <!-- PRODUCT 6 – EBOOK COMING SOON -->
+        <div class="product-card coming-soon reveal">
+          <span class="prod-ribbon ribbon-soon">📖 COMING SOON</span>
+          <div class="prod-emoji">📚</div>
+          <div class="prod-name">AI INCOME EBOOK</div>
+          <div class="prod-tagline">Digital Doctor ki exclusive ebook — AI se income kaise generate karo, step-by-step complete guide. Coming very soon!</div>
+          <ul class="prod-features">
+            <li>AI Freelancing complete roadmap</li>
+            <li>Prompt engineering secrets</li>
+            <li>Real income case studies</li>
+            <li>Bonus: 30 extra prompts included</li>
+          </ul>
+          <div class="prod-price">
+            <span class="price-amount">₹199</span>
+            <span class="price-old">₹599</span>
+            <span class="price-save">NOTIFY ME</span>
+          </div>
+          <a href="https://wa.me/919873060755?text=Hi%2C%20please%20notify%20me%20when%20the%20AI%20Income%20Ebook%20launches!" target="_blank" class="prod-cta cta-soon">NOTIFY ME WHEN LIVE 🔔</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- BENEFITS -->
+  <section id="benefits">
+    <div class="container">
+      <div class="section-tag reveal">WHY CHOOSE US</div>
+      <h2 class="section-title reveal">PromptBoxLab Ka <span class="gradient-text">Fayda Kya Hai?</span></h2>
+      <div class="benefits-grid">
+        <div class="benefit-card reveal">
+          <div class="benefit-icon">⚡</div>
+          <div class="benefit-title">INSTANT DELIVERY</div>
+          <div class="benefit-text">WhatsApp pe message karo, aur turant apna product pao. Zero wait time.</div>
+        </div>
+        <div class="benefit-card reveal">
+          <div class="benefit-icon">🔒</div>
+          <div class="benefit-title">SECURE PAYMENT</div>
+          <div class="benefit-text">UPI, PhonePe, GPay sab accepted. Safe transaction guaranteed.</div>
+        </div>
+        <div class="benefit-card reveal">
+          <div class="benefit-icon">🎯</div>
+          <div class="benefit-title">TESTED & PROVEN</div>
+          <div class="benefit-text">Sab products Digital Doctor ne personally use karke test kiye hain.</div>
+        </div>
+        <div class="benefit-card reveal">
+          <div class="benefit-icon">🔄</div>
+          <div class="benefit-title">FREE UPDATES</div>
+          <div class="benefit-text">Ek baar buy karo, lifetime updates milenge free mein.</div>
+        </div>
+        <div class="benefit-card reveal">
+          <div class="benefit-icon">📞</div>
+          <div class="benefit-title">SUPPORT 24/7</div>
+          <div class="benefit-text">Koi bhi problem ho, WhatsApp pe directly baat karo.</div>
+        </div>
+        <div class="benefit-card reveal">
+          <div class="benefit-icon">💰</div>
+          <div class="benefit-title">BEST PRICING</div>
+          <div class="benefit-text">Market ka sabse sasta, lekin quality mein koi compromise nahi.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section id="testimonials">
+    <div class="container">
+      <div class="section-tag reveal">CUSTOMER REVIEWS</div>
+      <h2 class="section-title reveal">Log Kya Keh Rahe Hain <span class="gradient-text">Hamare Baare Mein?</span></h2>
+      <div class="testi-grid">
+        <div class="testi-card reveal">
+          <div class="testi-stars">★★★★★</div>
+          <div class="testi-text">"100 Prompt Pack ne meri freelancing speed 3x kar di. Ab mai ChatGPT se jo chahiye woh extract kar leta hoon instantly. Best investment!"</div>
+          <div class="testi-author">
+            <div class="testi-avatar">R</div>
+            <div><div class="testi-name">Rahul Sharma</div><div class="testi-role">Freelance Content Writer, Delhi</div></div>
+          </div>
+        </div>
+        <div class="testi-card reveal">
+          <div class="testi-stars">★★★★★</div>
+          <div class="testi-text">"Music Pack ke bina meri YouTube videos ruk gayi thi copyright ki wajah se. Ab 50 licensed tracks hain, koi tension nahi. Superb product!"</div>
+          <div class="testi-author">
+            <div class="testi-avatar">P</div>
+            <div><div class="testi-name">Priya Mehta</div><div class="testi-role">YouTuber & Content Creator, Mumbai</div></div>
+          </div>
+        </div>
+        <div class="testi-card reveal">
+          <div class="testi-stars">★★★★★</div>
+          <div class="testi-text">"Android app se ab har prompt ek click mein save hota hai. Clipboard se auto-save toh kamaal ka feature hai. Digital Doctor rocks!"</div>
+          <div class="testi-author">
+            <div class="testi-avatar">A</div>
+            <div><div class="testi-name">Arjun Patel</div><div class="testi-role">Digital Marketer, Ahmedabad</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- URGENCY -->
+  <section id="urgency">
+    <div class="container">
+      <div class="urgency-inner reveal">
+        <div class="urgency-badge">LIMITED TIME OFFER — GRAB NOW</div>
+        <h2 class="section-title">Offer Khatam Hone Se Pehle <span class="gradient-text">Order Karo!</span></h2>
+        <p class="section-sub" style="margin: 16px auto; text-align:center">Ye discounted prices sirf limited time ke liye hain. Price badh sakti hai kisi bhi waqt. Ab baat karo aur lock karo apna deal!</p>
+        <div class="countdown">
+          <div class="count-block"><div class="count-num" id="hours">00</div><div class="count-label">HOURS</div></div>
+          <div class="count-block"><div class="count-num" id="mins">00</div><div class="count-label">MINUTES</div></div>
+          <div class="count-block"><div class="count-num" id="secs">00</div><div class="count-label">SECONDS</div></div>
+        </div>
+        <br><br>
+        <a href="https://wa.me/919873060755?text=Hi%2C%20I%20want%20to%20buy%20PromptBoxLab%20products%20before%20offer%20ends!" target="_blank" class="btn-primary" style="font-size:14px; padding:18px 48px">⚡ WHATSAPP KARO — ABHI!</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="container">
+      <div class="section-tag reveal">GET IN TOUCH</div>
+      <h2 class="section-title reveal">Koi Bhi <span class="gradient-text">Sawaal? Baat Karo!</span></h2>
+      <div class="contact-grid">
+        <div class="contact-info reveal">
+          <h3>Hum Yahan Hain Aapke Liye 🙌</h3>
+          <p style="color:var(--muted); font-size:16px; line-height:1.7; margin-bottom:28px">WhatsApp ya Email pe directly contact karo. Hamara response time 5 minutes se bhi kam hai. Seedha Digital Doctor se baat karo!</p>
+          <div class="contact-detail">
+            <span class="icon">📱</span>
+            <div><div class="label">WHATSAPP</div><div class="value">+91 98730 60755</div></div>
+          </div>
+          <div class="contact-detail">
+            <span class="icon">📧</span>
+            <div><div class="label">EMAIL</div><div class="value">amarendrakumar824@gmail.com</div></div>
+          </div>
+          <div class="contact-detail">
+            <span class="icon">🏢</span>
+            <div><div class="label">BRAND</div><div class="value">Digital Doctor™</div></div>
+          </div>
+          <div class="contact-detail">
+            <span class="icon">📋</span>
+            <div><div class="label">REGISTERED AS</div><div class="value">PromptBoxLab®</div></div>
+          </div>
+          <br>
+          <a href="https://wa.me/919873060755?text=Hi%20Digital%20Doctor%21%20I%20have%20a%20question%20about%20PromptBoxLab." target="_blank" class="btn-primary" style="display:inline-flex;align-items:center;gap:10px;text-decoration:none">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            WHATSAPP NOW
+          </a>
+        </div>
+        <div class="form-box reveal">
+          <div class="form-title">📬 Message Bhejo</div>
+          <form id="contactForm" action="mailto:amarendrakumar824@gmail.com" method="POST" enctype="text/plain">
+            <div class="form-group">
+              <label>FULL NAME *</label>
+              <input type="text" id="fname" placeholder="Aapka naam..." />
+              <div class="form-error" id="fnameErr">Name required hai!</div>
+            </div>
+            <div class="form-group">
+              <label>PHONE NUMBER *</label>
+              <input type="tel" id="fphone" placeholder="WhatsApp number..." />
+              <div class="form-error" id="fphoneErr">Valid phone number daalo!</div>
+            </div>
+            <div class="form-group">
+              <label>EMAIL ADDRESS</label>
+              <input type="email" id="femail" placeholder="Email (optional)..." />
+            </div>
+            <div class="form-group">
+              <label>INTERESTED IN *</label>
+              <select id="fproduct">
+                <option value="">-- Product Select Karo --</option>
+                <option>100 AI Prompt Pack (₹299)</option>
+                <option>50 Music Pack + Licence (₹499)</option>
+                <option>Prompt Manager EXE – Windows (₹349)</option>
+                <option>Android Prompt App (₹299)</option>
+                <option>Windows + Android Bundle (₹549)</option>
+                <option>AI Income Ebook – Coming Soon</option>
+                <option>Sab kuch chahiye – Combo</option>
+              </select>
+              <div class="form-error" id="fprodErr">Product select karo!</div>
+            </div>
+            <div class="form-group">
+              <label>MESSAGE</label>
+              <textarea id="fmsg" placeholder="Koi sawaal ya special requirement..."></textarea>
+            </div>
+            <button type="button" class="btn-submit" onclick="submitForm()">📨 SEND MESSAGE</button>
+          </form>
+          <div class="form-success" id="formSuccess">
+            <div class="checkmark">✅</div>
+            <h4>Message Bhej Diya!</h4>
+            <p style="color:var(--muted);margin-top:8px">Hum jald hi aapse contact karenge. Ya seedha WhatsApp karo!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq">
+    <div class="container">
+      <div class="section-tag reveal">COMMON QUESTIONS</div>
+      <h2 class="section-title reveal">Aksar Pooche Jaane Wale <span class="gradient-text">Sawaal</span></h2>
+      <div class="faq-grid">
+
+        <div class="faq-item reveal">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            Product kaise milega after payment? <span class="faq-arrow">+</span>
+          </div>
+          <div class="faq-a"><div class="faq-a-inner">Payment ke turant baad WhatsApp pe download link ya file bhej di jaayegi. Maximum 5 minutes ka time lagta hai. Raat ko bhi instant delivery hoti hai!</div></div>
+        </div>
+
+        <div class="faq-item reveal">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            Payment ke kya options hain? <span class="faq-arrow">+</span>
+          </div>
+          <div class="faq-a"><div class="faq-a-inner">UPI, PhonePe, Google Pay, Paytm, Bank Transfer — sab accepted hain. WhatsApp pe message karo, QR code bhej denge.</div></div>
+        </div>
+
+        <div class="faq-item reveal">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            Music Pack mein full commercial licence hai? <span class="faq-arrow">+</span>
+          </div>
+          <div class="faq-a"><div class="faq-a-inner">Haan! Har track ke saath written commercial licence milta hai. Aap YouTube, Instagram Reels, Shorts, Podcasts, Ads — kahin bhi use kar sakte ho. Copyright strike ka koi dar nahi.</div></div>
+        </div>
+
+        <div class="faq-item reveal">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            Android app kaunse phones pe chalega? <span class="faq-arrow">+</span>
+          </div>
+          <div class="faq-a"><div class="faq-a-inner">Android 6.0 aur upar ke sab phones pe chalega. APK direct install hoga, kisi special requirement ki zaroorat nahi. Root bhi nahi chahiye.</div></div>
+        </div>
+
+        <div class="faq-item reveal">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            Windows EXE app safe hai? Antivirus toh nahi bolega? <span class="faq-arrow">+</span>
+          </div>
+          <div class="faq-a"><div class="faq-a-inner">Bilkul safe hai! Clean code se banaya gaya hai. Kuch antivirus new .exe files ko flag kar dete hain — simple whitelist karke install kar lo. Koi malware ya virus nahi hai, guarantee.</div></div>
+        </div>
+
+        <div class="faq-item reveal">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            Refund milega agar product pasand nahi aaya? <span class="faq-arrow">+</span>
+          </div>
+          <div class="faq-a"><div class="faq-a-inner">Digital products ka refund typically nahi hota, lekin agar koi genuine technical problem hai toh WhatsApp pe contact karo — hum zaroor help karenge. Customer satisfaction hamari priority hai.</div></div>
+        </div>
+
+        <div class="faq-item reveal">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            Ebook kab aayega? Notify kaise hoga? <span class="faq-arrow">+</span>
+          </div>
+          <div class="faq-a"><div class="faq-a-inner">Ebook very soon launch hoga. Notify hone ke liye WhatsApp pe message karo "NOTIFY EBOOK" — launch hote hi aapko pehle pata chalega. Early bird price bhi milega!</div></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">DIGITAL DOCTOR</div>
+    <div class="footer-sub">Empowering Creators with Premium Digital Tools</div>
+    <div class="footer-links">
+      <a href="#products">Products</a>
+      <a href="#benefits">About</a>
+      <a href="#testimonials">Reviews</a>
+      <a href="#faq">FAQ</a>
+      <a href="mailto:amarendrakumar824@gmail.com">Email Us</a>
+      <a href="https://wa.me/919873060755" target="_blank">WhatsApp</a>
+    </div>
+    <div class="footer-copy">© 2025 Digital Doctor. Made with <span>❤️</span> in India.</div>
+    <div class="footer-reg">Registered Brand: PromptBoxLab® | Contact: +91 98730 60755 | amarendrakumar824@gmail.com</div>
+  </footer>
+
+  <!-- FLOATING WHATSAPP -->
+  <a href="https://wa.me/919873060755?text=Hi%20Digital%20Doctor%21%20I%27m%20interested%20in%20PromptBoxLab." target="_blank" class="wa-float" aria-label="Chat on WhatsApp">
+    <div class="wa-tooltip">Chat with us!</div>
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+  </a>
+
+  <script>
+    // ── MOBILE MENU ──
+    function toggleMenu() {
+      document.getElementById('navLinks').classList.toggle('open');
+    }
+
+    // ── SCROLL REVEAL ──
+    const reveals = document.querySelectorAll('.reveal');
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('visible'), i * 80);
+          obs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    reveals.forEach(el => obs.observe(el));
+
+    // ── FAQ TOGGLE ──
+    function toggleFaq(el) {
+      const item = el.parentElement;
+      const wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => {
+        i.classList.remove('open');
+        i.querySelector('.faq-a').style.maxHeight = '0';
+      });
+      if (!wasOpen) {
+        item.classList.add('open');
+        const ans = item.querySelector('.faq-a');
+        ans.style.maxHeight = ans.scrollHeight + 'px';
+      }
+    }
+
+    // ── COUNTDOWN TIMER ──
+    function startCountdown() {
+      // 23 hours 47 minutes from now
+      let total = 23 * 3600 + 47 * 60 + 33;
+      const stored = localStorage.getItem('pb_countdown');
+      const storedTime = localStorage.getItem('pb_countdown_start');
+      const now = Date.now();
+      if (stored && storedTime) {
+        const elapsed = Math.floor((now - parseInt(storedTime)) / 1000);
+        total = Math.max(0, parseInt(stored) - elapsed);
+      } else {
+        localStorage.setItem('pb_countdown', total);
+        localStorage.setItem('pb_countdown_start', now);
+      }
+      function tick() {
+        const h = Math.floor(total / 3600);
+        const m = Math.floor((total % 3600) / 60);
+        const s = total % 60;
+        document.getElementById('hours').textContent = String(h).padStart(2,'0');
+        document.getElementById('mins').textContent = String(m).padStart(2,'0');
+        document.getElementById('secs').textContent = String(s).padStart(2,'0');
+        if (total > 0) { total--; setTimeout(tick, 1000); }
+      }
+      tick();
+    }
+    startCountdown();
+
+    // ── FORM VALIDATION ──
+    function submitForm() {
+      let valid = true;
+      const name = document.getElementById('fname').value.trim();
+      const phone = document.getElementById('fphone').value.trim();
+      const product = document.getElementById('fproduct').value;
+
+      document.querySelectorAll('.form-error').forEach(e => e.style.display = 'none');
+
+      if (!name) {
+        document.getElementById('fnameErr').style.display = 'block'; valid = false;
+      }
+      if (!phone || phone.length < 10) {
+        document.getElementById('fphoneErr').style.display = 'block'; valid = false;
+      }
+      if (!product) {
+        document.getElementById('fprodErr').style.display = 'block'; valid = false;
+      }
+
+      if (!valid) return;
+
+      const msg = document.getElementById('fmsg').value;
+      const email = document.getElementById('femail').value;
+      const subject = `PromptBoxLab Inquiry – ${product}`;
+      const body = `Name: ${name}\nPhone: ${phone}\nEmail: ${email}\nProduct: ${product}\nMessage: ${msg}`;
+      window.location.href = `mailto:amarendrakumar824@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+      document.getElementById('contactForm').style.display = 'none';
+      document.getElementById('formSuccess').style.display = 'block';
+    }
+  </script>
+
+</body>
+</html>
